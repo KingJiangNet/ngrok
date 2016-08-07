@@ -1,6 +1,7 @@
 
 ##Build if you prefer
-If you want to build binaries from scratch, please follow the following steps.
+If you want to build binaries from scratch, please follow the following steps. Otherwise, please take them from:
+https://github.com/KingJiangNet/ngrok_binaries
 
 *yum, apt_get or others*
 - Install prerequisites
