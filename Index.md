@@ -98,7 +98,7 @@ useInsecureSkipVerify: true
 #CACrtPath: "/cacert.pem" # Set When useInsecureSkipVerify is false for higher security
 tunnels:
 web:
-    #auth: "AuthUser:AuthPassWord"
+    subdomain: "abc"
     proto:
 	http: 80
 ssh:
@@ -106,8 +106,12 @@ ssh:
     proto:
 	tcp: 22
 ```
+- Launch parameters:
+```
+./bin/ngrok start web ssh
+```
 
-- Add DNS record
+- Add DNS records
 e.g.
 abc.yourserver.com -> your server's public IP address
 yourserver.com -> your server's public IP address
