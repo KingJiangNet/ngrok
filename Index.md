@@ -11,7 +11,7 @@ sudo yum update
 sudo yum install build-essential golang mercurial git
 ```
 
-- Downlaod source
+- Download source
 ```
 git clone https://github.com/inconshreveable/ngrok.git ngrok
 cd ngrok
