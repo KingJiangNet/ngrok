@@ -4,11 +4,13 @@ import (
 	_ "crypto/sha512"
 	"crypto/tls"
 	"crypto/x509"
-	"encoding/pem"
-	"fmt"
-	"ngrok/client/assets"
+	//"encoding/pem"
+	//"fmt"
+	"io/ioutil"
+	//"ngrok/client/assets"
 )
 
+/*
 func LoadTLSConfig(rootCertPaths []string) (*tls.Config, error) {
 	pool := x509.NewCertPool()
 
@@ -33,3 +35,17 @@ func LoadTLSConfig(rootCertPaths []string) (*tls.Config, error) {
 
 	return &tls.Config{RootCAs: pool}, nil
 }
+*/
+
+func LoadTLSConfig(crtPath string) (*tls.Config, error) {
+	pool := x509.NewCertPool()
+
+	caCrt, err := ioutil.ReadFile(crtPath)
+	if err != nil {
+		return nil, err
+	}
+	pool.AppendCertsFromPEM(caCrt)
+
+	return &tls.Config{RootCAs: pool}, nil
+}
+

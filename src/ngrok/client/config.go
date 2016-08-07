@@ -19,6 +19,8 @@ type Configuration struct {
 	HttpProxy          string                          `yaml:"http_proxy,omitempty"`
 	ServerAddr         string                          `yaml:"server_addr,omitempty"`
 	InspectAddr        string                          `yaml:"inspect_addr,omitempty"`
+	SkipVerify         bool                            `yaml:"useInsecureSkipVerify,omitempty"`
+	CACrtPath          string                          `yaml:"caCrtPath,omitempty"`
 	TrustHostRootCerts bool                            `yaml:"trust_host_root_certs,omitempty"`
 	AuthToken          string                          `yaml:"auth_token,omitempty"`
 	Tunnels            map[string]*TunnelConfiguration `yaml:"tunnels,omitempty"`
@@ -76,6 +78,10 @@ func LoadConfiguration(opts *Options) (config *Configuration, err error) {
 		config.InspectAddr = defaultInspectAddr
 	}
 
+	if config.CACrtPath == "" {
+		config.CACrtPath = defaultCACrtPath
+	}
+	
 	if config.HttpProxy == "" {
 		config.HttpProxy = os.Getenv("http_proxy")
 	}

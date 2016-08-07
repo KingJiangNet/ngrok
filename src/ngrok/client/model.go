@@ -23,6 +23,7 @@ import (
 const (
 	defaultServerAddr   = "ngrokd.ngrok.com:443"
 	defaultInspectAddr  = "127.0.0.1:4040"
+	defaultCACrtPath    = "/cacert.pem"
 	pingInterval        = 20 * time.Second
 	maxPongLatency      = 15 * time.Second
 	updateCheckInterval = 6 * time.Hour
@@ -106,16 +107,17 @@ func newClientModel(config *Configuration, ctl mvc.Controller) *ClientModel {
 		m.Info("Trusting host's root certificates")
 		m.tlsConfig = &tls.Config{}
 	} else {
-		m.Info("Trusting root CAs: %v", rootCrtPaths)
+		m.Info("Trusting root CAs: %v", config.CACrtPath)
 		var err error
-		if m.tlsConfig, err = LoadTLSConfig(rootCrtPaths); err != nil {
+		if m.tlsConfig, err = LoadTLSConfig(config.CACrtPath); err != nil {
 			panic(err)
 		}
 	}
 
 	// configure TLS SNI
 	m.tlsConfig.ServerName = serverName(m.serverAddr)
-	m.tlsConfig.InsecureSkipVerify = useInsecureSkipVerify()
+	// m.tlsConfig.InsecureSkipVerify = useInsecureSkipVerify()
+	m.tlsConfig.InsecureSkipVerify = config.SkipVerify
 
 	return m
 }
